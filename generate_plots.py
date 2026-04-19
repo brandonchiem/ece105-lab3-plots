@@ -79,3 +79,90 @@ def plot_scatter(sensor_a, sensor_b, timestamps, ax):
     ax.set_title("Sensor Readings vs Time")
     ax.legend()
     return None
+
+# Create plot_histogram(sensor_a, sensor_b, ax) that draws the overlaid histogram
+# from the notebook onto the given Axes object.
+# NumPy-style docstring. Modifies ax in place, returns None.
+
+
+def plot_histogram(sensor_a, sensor_b, ax):
+    """Plot overlaid sensor temperature histograms on an existing Axes.
+
+    Parameters
+    ----------
+    sensor_a : numpy.ndarray
+        Sensor A temperature readings in degrees Celsius. Expected shape
+        is (200,).
+    sensor_b : numpy.ndarray
+        Sensor B temperature readings in degrees Celsius. Expected shape
+        is (200,).
+    ax : matplotlib.axes.Axes
+        Existing Matplotlib Axes to draw on.
+
+    Returns
+    -------
+    None
+        This function modifies ``ax`` in place and returns ``None``.
+    """
+    ax.hist(sensor_a, bins=30, alpha=0.5, color="blue", label="Sensor A")
+    ax.hist(sensor_b, bins=30, alpha=0.5, color="orange", label="Sensor B")
+    ax.axvline(
+        sensor_a.mean(),
+        color="blue",
+        linestyle="--",
+        linewidth=2,
+        label="Sensor A mean",
+    )
+    ax.axvline(
+        sensor_b.mean(),
+        color="orange",
+        linestyle="--",
+        linewidth=2,
+        label="Sensor B mean",
+    )
+    ax.set_xlabel("Temperature (°C)")
+    ax.set_ylabel("Count")
+    ax.set_title("Temperature Distributions: Sensor A vs Sensor B")
+    ax.legend()
+    return None
+
+# Create side-by-side box plot comparing Sensor A and Sensor B distributions.
+# Label x-axis with sensor names, y-axis with "Temperature (deg C)".
+# Add a horizontal dashed line at the overall mean of both sensors combined.
+# NumPy-style docstring. Modifies ax in place, returns None.
+
+
+def plot_boxplot(sensor_a, sensor_b, ax):
+    """Plot side-by-side sensor box plots on an existing Axes.
+
+    Parameters
+    ----------
+    sensor_a : numpy.ndarray
+        Sensor A temperature readings in degrees Celsius. Expected shape
+        is (200,).
+    sensor_b : numpy.ndarray
+        Sensor B temperature readings in degrees Celsius. Expected shape
+        is (200,).
+    ax : matplotlib.axes.Axes
+        Existing Matplotlib Axes to draw on.
+
+    Returns
+    -------
+    None
+        This function modifies ``ax`` in place and returns ``None``.
+    """
+    ax.boxplot([sensor_a, sensor_b], labels=["Sensor A", "Sensor B"])
+    overall_mean = np.mean(np.concatenate([sensor_a, sensor_b]))
+    ax.axhline(
+        overall_mean,
+        color="red",
+        linestyle="--",
+        linewidth=2,
+        label="Overall mean",
+    )
+    ax.set_xlabel("Sensor")
+    ax.set_ylabel("Temperature (deg C)")
+    ax.set_title("Sensor Temperature Comparison")
+    ax.legend()
+    return None
+
