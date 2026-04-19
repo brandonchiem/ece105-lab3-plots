@@ -9,6 +9,7 @@ Usage
     python generate_plots.py
 """
 
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -151,7 +152,7 @@ def plot_boxplot(sensor_a, sensor_b, ax):
     None
         This function modifies ``ax`` in place and returns ``None``.
     """
-    ax.boxplot([sensor_a, sensor_b], labels=["Sensor A", "Sensor B"])
+    ax.boxplot([sensor_a, sensor_b], tick_labels=["Sensor A", "Sensor B"])
     overall_mean = np.mean(np.concatenate([sensor_a, sensor_b]))
     ax.axhline(
         overall_mean,
@@ -166,3 +167,36 @@ def plot_boxplot(sensor_a, sensor_b, ax):
     ax.legend()
     return None
 
+# Create main() that generates data, creates a 1x3 subplot figure,
+# calls each plot function, adjusts layout, and saves as sensor_analysis.png
+# at 150 DPI with tight bounding box.
+
+
+def main():
+    """Generate sensor plots and save them to a PNG file.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    None
+        Creates a figure with scatter, histogram, and box plot subplots and
+        saves it as ``sensor_analysis.png``.
+    """
+    sensor_a, sensor_b, timestamps = generate_data(seed=8736)
+
+    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+    plot_scatter(sensor_a, sensor_b, timestamps, axes[0])
+    plot_histogram(sensor_a, sensor_b, axes[1])
+    plot_boxplot(sensor_a, sensor_b, axes[2])
+
+    fig.tight_layout()
+    fig.savefig("sensor_analysis.png", dpi=150, bbox_inches="tight")
+    plt.close(fig)
+    return None
+
+
+if __name__ == "__main__":
+    main()
