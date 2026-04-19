@@ -44,3 +44,38 @@ def generate_data(seed):
     sensor_b = rng.normal(loc=27, scale=4.5, size=200)
     timestamps = rng.uniform(low=0, high=10, size=200)
     return sensor_a, sensor_b, timestamps
+
+# Create plot_scatter(sensor_a, sensor_b, timestamps, ax) that draws
+# the scatter plot from the notebook onto the given Axes object.
+# NumPy-style docstring. Modifies ax in place, returns None.
+
+
+def plot_scatter(sensor_a, sensor_b, timestamps, ax):
+    """Plot sensor temperatures against timestamps on an existing Axes.
+
+    Parameters
+    ----------
+    sensor_a : numpy.ndarray
+        Sensor A temperature readings in degrees Celsius. Expected shape
+        is (200,).
+    sensor_b : numpy.ndarray
+        Sensor B temperature readings in degrees Celsius. Expected shape
+        is (200,).
+    timestamps : numpy.ndarray
+        Timestamp values in seconds corresponding to each reading. Expected
+        shape is (200,).
+    ax : matplotlib.axes.Axes
+        Existing Matplotlib Axes to draw on.
+
+    Returns
+    -------
+    None
+        This function modifies ``ax`` in place and returns ``None``.
+    """
+    ax.scatter(timestamps, sensor_a, color="blue", label="Sensor A", alpha=0.7)
+    ax.scatter(timestamps, sensor_b, color="orange", label="Sensor B", alpha=0.7)
+    ax.set_xlabel("Time (s)")
+    ax.set_ylabel("Temperature (°C)")
+    ax.set_title("Sensor Readings vs Time")
+    ax.legend()
+    return None
