@@ -167,7 +167,7 @@ def plot_boxplot(sensor_a, sensor_b, ax):
     ax.legend()
     return None
 
-# Create main() that generates data, creates a 1x3 subplot figure,
+# Create main() that generates data, creates a 2x2 subplot figure,
 # calls each plot function, adjusts layout, and saves as sensor_analysis.png
 # at 150 DPI with tight bounding box.
 
@@ -182,15 +182,17 @@ def main():
     Returns
     -------
     None
-        Creates a figure with scatter, histogram, and box plot subplots and
-        saves it as ``sensor_analysis.png``.
+        Creates a 2x2 figure with scatter, histogram, and box plot subplots,
+        leaves the fourth subplot empty, and saves the result as
+        ``sensor_analysis.png``.
     """
     sensor_a, sensor_b, timestamps = generate_data(seed=8736)
 
-    fig, axes = plt.subplots(1, 3, figsize=(18, 5))
-    plot_scatter(sensor_a, sensor_b, timestamps, axes[0])
-    plot_histogram(sensor_a, sensor_b, axes[1])
-    plot_boxplot(sensor_a, sensor_b, axes[2])
+    fig, axes = plt.subplots(2, 2, figsize=(12, 10))
+    plot_scatter(sensor_a, sensor_b, timestamps, axes[0, 0])
+    plot_histogram(sensor_a, sensor_b, axes[0, 1])
+    plot_boxplot(sensor_a, sensor_b, axes[1, 0])
+    axes[1, 1].axis("off")
 
     fig.tight_layout()
     fig.savefig("sensor_analysis.png", dpi=150, bbox_inches="tight")
